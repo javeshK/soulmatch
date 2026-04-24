@@ -86,6 +86,8 @@ SEARCH_QUERIES: Dict[str, List[str]] = {
         "Punjabi party songs 2024 official",
         "Guru Randhawa 2024 official",
         "new Punjabi pop 2024",
+        "Arjan Dillon 2024 official",
+        "Pakistani Punjabi songs 2024 official",
     ],
 }
 
