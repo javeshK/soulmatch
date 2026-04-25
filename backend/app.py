@@ -1,5 +1,5 @@
 """
-app.py — SoundMatch AI — Flask Application
+app.py — VIbeLens — Flask Application
 ==========================================
 Endpoints:
   GET  /                     → Serve frontend

@@ -1,5 +1,5 @@
 """
-run.py — SoundMatch AI Application Entry Point
+run.py — VIbeLens Application Entry Point
 ===============================================
 Run with:  python run.py
 """
@@ -18,7 +18,7 @@ if __name__ == "__main__":
     host    = os.environ.get("HOST", "0.0.0.0")
 
     print("━" * 60)
-    print("  🎵 SoundMatch AI — Starting Server")
+    print("  🎵 VIbeLens — Starting Server")
     print(f"  📡  http://{host}:{port}")
     print(f"  🔧  Debug: {debug}")
     print("━" * 60)

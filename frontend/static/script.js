@@ -1,5 +1,5 @@
 /**
- * SoundMatch AI — Frontend JavaScript
+ * VIbeLens — Frontend JavaScript
  * Handles image upload, cropping, API calls, and results display
  */
 

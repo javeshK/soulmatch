@@ -1,4 +1,4 @@
-# 🎵 SoundMatch AI
+# 🎵 VIbeLens
 
 AI-powered music recommendation engine that analyzes images and suggests songs matching the mood, colors, and aesthetic of the photo.
 
@@ -43,7 +43,7 @@ The app will start at `http://localhost:5000`
 ## Project Structure
 
 ```
-soundmatch-ai/
+vibelens-ai/
 ├── run.py              # Entry point
 ├── requirements.txt    # Dependencies
 ├── backend/
