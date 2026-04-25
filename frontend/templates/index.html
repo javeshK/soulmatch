@@ -167,6 +167,14 @@
         <input type="file" id="fileInput" accept="image/*" class="visually-hidden" aria-label="Upload image file" />
       </div>
 
+      <!-- Camera Button -->
+      <div class="camera-row">
+        <button class="camera-btn" id="openCameraBtn" aria-label="Open camera to take photo">
+          <span class="camera-icon">📸</span>
+          <span>Take Photo</span>
+        </button>
+      </div>
+
       <!-- Crop toolbar — shown after image selected -->
       <div class="crop-toolbar hidden" id="cropToolbar">
         <button class="crop-btn" id="openCropModal">
@@ -219,6 +227,33 @@
     <div class="crop-modal-actions">
       <button class="crop-reset-btn" id="cropResetBtn">↺ Reset</button>
       <button class="crop-confirm-btn" id="cropConfirmBtn">✓ Apply Crop</button>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════════════════════════════════════════════════════════════
+     CAMERA MODAL
+══════════════════════════════════════════════════════════════════════════ -->
+<div class="modal-overlay hidden" id="cameraModalOverlay" role="dialog" aria-modal="true" aria-label="Camera capture">
+  <div class="camera-modal">
+    <div class="camera-modal-header">
+      <h3>📸 Take Photo</h3>
+      <p>Position your shot and click capture</p>
+      <button class="modal-close" id="cameraModalClose" aria-label="Close camera">✕</button>
+    </div>
+
+    <div class="camera-container">
+      <video id="cameraVideo" autoplay playsinline></video>
+      <canvas id="cameraCanvas" class="hidden"></canvas>
+    </div>
+
+    <div class="camera-modal-actions">
+      <button class="camera-capture-btn" id="captureBtn">
+        <span class="capture-icon">⏺</span>
+        <span>Capture</span>
+      </button>
+      <button class="camera-retake-btn hidden" id="retakeBtn">↺ Retake</button>
+      <button class="camera-use-btn hidden" id="usePhotoBtn">✓ Use Photo</button>
     </div>
   </div>
 </div>

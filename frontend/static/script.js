@@ -39,6 +39,16 @@ const elements = {
   cropResetBtn: $("#cropResetBtn"),
   cropConfirmBtn: $("#cropConfirmBtn"),
   
+  // Camera
+  openCameraBtn: $("#openCameraBtn"),
+  cameraModalOverlay: $("#cameraModalOverlay"),
+  cameraModalClose: $("#cameraModalClose"),
+  cameraVideo: $("#cameraVideo"),
+  cameraCanvas: $("#cameraCanvas"),
+  captureBtn: $("#captureBtn"),
+  retakeBtn: $("#retakeBtn"),
+  usePhotoBtn: $("#usePhotoBtn"),
+  
   // Language
   langTabs: $$(".lang-tab"),
   
@@ -84,6 +94,7 @@ const elements = {
 document.addEventListener("DOMContentLoaded", () => {
   initUpload();
   initCrop();
+  initCamera();
   initLanguage();
   initAnalyse();
   initReset();
@@ -234,6 +245,85 @@ function closeCropModal() {
   if (state.cropper) {
     state.cropper.destroy();
     state.cropper = null;
+  }
+}
+
+// ═══════════════════════════════════════════════════════════════════════════
+// Camera Handling
+// ═══════════════════════════════════════════════════════════════════════════
+
+let cameraStream = null;
+
+function initCamera() {
+  const {
+    openCameraBtn, cameraModalOverlay, cameraModalClose,
+    cameraVideo, cameraCanvas, captureBtn, retakeBtn, usePhotoBtn
+  } = elements;
+  
+  // Open camera modal
+  openCameraBtn.addEventListener("click", async () => {
+    try {
+      cameraStream = await navigator.mediaDevices.getUserMedia({
+        video: { facingMode: "environment" },
+        audio: false
+      });
+      cameraVideo.srcObject = cameraStream;
+      cameraVideo.classList.remove("hidden");
+      cameraCanvas.classList.add("hidden");
+      captureBtn.classList.remove("hidden");
+      retakeBtn.classList.add("hidden");
+      usePhotoBtn.classList.add("hidden");
+      cameraModalOverlay.classList.remove("hidden");
+    } catch (err) {
+      showToast("Could not access camera. Please allow camera permissions.", "error");
+      console.error("Camera error:", err);
+    }
+  });
+  
+  // Close camera modal
+  cameraModalClose.addEventListener("click", closeCameraModal);
+  cameraModalOverlay.addEventListener("click", (e) => {
+    if (e.target === cameraModalOverlay) closeCameraModal();
+  });
+  
+  // Capture photo
+  captureBtn.addEventListener("click", () => {
+    const context = cameraCanvas.getContext("2d");
+    cameraCanvas.width = cameraVideo.videoWidth;
+    cameraCanvas.height = cameraVideo.videoHeight;
+    context.drawImage(cameraVideo, 0, 0, cameraCanvas.width, cameraCanvas.height);
+    
+    cameraVideo.classList.add("hidden");
+    cameraCanvas.classList.remove("hidden");
+    captureBtn.classList.add("hidden");
+    retakeBtn.classList.remove("hidden");
+    usePhotoBtn.classList.remove("hidden");
+  });
+  
+  // Retake photo
+  retakeBtn.addEventListener("click", () => {
+    cameraVideo.classList.remove("hidden");
+    cameraCanvas.classList.add("hidden");
+    captureBtn.classList.remove("hidden");
+    retakeBtn.classList.add("hidden");
+    usePhotoBtn.classList.add("hidden");
+  });
+  
+  // Use photo
+  usePhotoBtn.addEventListener("click", () => {
+    cameraCanvas.toBlob((blob) => {
+      const file = new File([blob], "camera-capture.jpg", { type: "image/jpeg" });
+      handleFile(file);
+      closeCameraModal();
+    }, "image/jpeg", 0.9);
+  });
+}
+
+function closeCameraModal() {
+  elements.cameraModalOverlay.classList.add("hidden");
+  if (cameraStream) {
+    cameraStream.getTracks().forEach(track => track.stop());
+    cameraStream = null;
   }
 }
 
